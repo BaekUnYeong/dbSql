@@ -54,3 +54,20 @@ SELECT '사용자 아이디 : ' ||  userid as "사용자 아이디", CONCAT('사용자 아이디 :
 SELECT * FROM user_tables;
 
 SELECT table_name, 'SELECT * FROM ' || table_name || ';' as "QUERY" FROM user_tables;
+
+--desc table
+-- 테이블에 정의된 컬럼을 알고 싶을 때
+-- 1. desc
+-- 2. select * ....
+
+desc emp;
+
+SELECT * FROM emp;
+
+-- WHERE절, 조건 연산자
+SELECT * FROM users
+WHERE userid = 'brown';
+
+--usernm이 샐리인 데이터를 조회하는 쿼리를 작성
+SELECT * FROM users
+WHERE usernm = '샐리';
