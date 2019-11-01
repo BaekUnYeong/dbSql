@@ -170,3 +170,6 @@ SELECT CONCAT(CONCAT('HELLO', ', WOR'), 'LD') CONCAT,
         -- RPAD(문자열, 전체 문자열길이, 문자열이 전체문자열길이에 미치지 못할경우 추가할 문자) 오른쪽부터
         RPAD('HELLO, WORLD', 15, '*') rpad
 FROM dual;
+
+
+dd
