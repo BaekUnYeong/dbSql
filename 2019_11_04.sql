@@ -189,3 +189,4 @@ SELECT
     --201908 : 2019년월 8월의 일수 : 31
     ADD_MONTHS(TO_DATE('201908','YYYYMM'), 1) - TO_DATE('201908','YYYYMM') "add_months - to_date"
 FROM dual;
+
