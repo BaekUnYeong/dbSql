@@ -118,6 +118,74 @@ FROM dual;
 -- 오늘 날짜를 다음과 같은 포맷으로 조회
 SELECT 
     TO_CHAR(SYSDATE, 'YYYY-MM-DD') dt_dash,
-    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') dt_dash_width_time,
+    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') dt_dash_with_time,
     TO_CHAR(SYSDATE, 'DD-MM-YYYY') dt_dd_mm_yyyy
+FROM dual;
+
+-- 날짜의 반올림(ROUND), 절삭(TRUNC)
+-- ROUND(DATE, '포맷') YYYY,MM,DD
+desc emp;
+
+SELECT ename,
+    TO_CHAR(hiredate, 'YYYY/MM/DD HH24:MI:SS') as "입사일",
+    TO_CHAR(ROUND(hiredate, 'YYYY'), 'YYYY/MM/DD HH24:MI:SS') as round_YYYY,
+    TO_CHAR(ROUND(hiredate, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as round_MM,
+    TO_CHAR(ROUND(hiredate, 'DD'), 'YYYY/MM/DD HH24:MI:SS') as round_DD,
+    TO_CHAR(ROUND(hiredate-1, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as round_MM,
+    TO_CHAR(ROUND(hiredate-2, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as round_MM
+FROM emp
+WHERE ename = 'SMITH';
+
+SELECT ename,
+TO_CHAR(hiredate, 'YYYY/MM/DD HH24:MI:SS') as "입사일",
+TO_CHAR(TRUNC(hiredate, 'YYYY'), 'YYYY/MM/DD HH24:MI:SS') as trunc_YYYY,
+TO_CHAR(TRUNC(hiredate, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as trunc_MM,
+TO_CHAR(TRUNC(hiredate, 'DD'), 'YYYY/MM/DD HH24:MI:SS') as trunc_DD,
+TO_CHAR(TRUNC(hiredate-1, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as trunc_MM,
+TO_CHAR(TRUNC(hiredate-2, 'MM'), 'YYYY/MM/DD HH24:MI:SS') as trunc_MM
+FROM emp
+WHERE ename = 'SMITH';
+
+-- 날짜 연산 함수
+-- MONTHS_BETWEEN(DATE, DATE) : 두 날짜 사이의 개월 수
+-- 19801217 ~ 20191104 --> 20191117
+SELECT ename, TO_CHAR(hiredate, 'YYYY/MM/DD HH24:MI:SS') hiredate,
+    MONTHS_BETWEEN(SYSDATE, hiredate) months_between,
+    MONTHS_BETWEEN(TO_DATE('20191117', 'YYYY/MM/DD'), hiredate) months_between
+FROM emp
+WHERE ename = 'SMITH';
+
+-- ADD MONTHS(DATE, 개월수) : DATE에 개월수가 지난 날짜
+-- 개월수가 양수일경우 미래, 음수일 경우 과거
+SELECT ename, TO_CHAR(hiredate, 'YYYY/MM/DD HH24:MI:SS') hiredate,
+    ADD_MONTHS(hiredate, 467) add_months,
+    ADD_MONTHS(hiredate, -467) add_months
+FROM emp
+WHERE ename = 'SMITH';
+
+-- NEXT_DAY(DATE, 요일) : DATE이후 첫번째 요일의 날짜
+SELECT SYSDATE, 
+    NEXT_DAY(SYSDATE, 7) first_sat, -- 오늘날짜이후 첫 토요일 일자
+    NEXT_DAY(SYSDATE, '토') first_sat -- 오늘날짜이후 첫 토요일 일자
+FROM dual;
+
+-- LAST_DAY(DATE)해당 날짜가 속한 월의 마지막 일자
+SELECT SYSDATE,
+    LAST_DAY(SYSDATE) LAST_DAY,
+    LAST_DAY(ADD_MONTHS(SYSDATE, 1)) LAST_DAY_12
+FROM dual;
+
+-- DATE + 정수 = DATE(DATE에서 정수만큼 이후의 DATE)
+-- D1 + 정수 = D2
+-- 양변에서 D2 차감
+-- D1 + 정수 - D2 = D2 - D2 > D1 + 정수 - D2 = 0
+-- 양변에서 D1 차감
+-- D1 + 정수 - D1 = D2 - D1 > 정수 = D2 - D1
+-- 날짜에서 날짜를 빼면 일자가 나온다
+
+SELECT
+    TO_DATE('20191104', 'YYYYMMDD') - TO_DATE('20191101', 'YYYYMMDD') "date-date",
+    TO_DATE('20191201', 'YYYYMMDD') - TO_DATE('20191101', 'YYYYMMDD') "date-date",
+    --201908 : 2019년월 8월의 일수 : 31
+    ADD_MONTHS(TO_DATE('201908','YYYYMM'), 1) - TO_DATE('201908','YYYYMM') "add_months - to_date"
 FROM dual;
