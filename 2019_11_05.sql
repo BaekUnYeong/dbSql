@@ -158,9 +158,15 @@ SELECT
         WHEN deptno = 20 THEN 'RESEARCH'
         WHEN deptno = 30 THEN 'SALES'
         else 'DDIT'
-    END dname, deptno, MAX(sal)max_sal, MIN(sal)min_sal, ROUND(AVG(sal),2)avg_sal, SUM(sal)sum_sal, COUNT(sal)count_sal, COUNT(mgr)count_mgr, COUNT(*)count_all
+    END dname, MAX(sal)max_sal, MIN(sal)min_sal, ROUND(AVG(sal),2)avg_sal, SUM(sal)sum_sal, COUNT(sal)count_sal, COUNT(mgr)count_mgr, COUNT(*)count_all
 FROM emp
-GROUP BY deptno
+GROUP BY 
+    CASE
+        WHEN deptno = 10 THEN 'ACCOUNTING'
+        WHEN deptno = 20 THEN 'RESEARCH'
+        WHEN deptno = 30 THEN 'SALES'
+        else 'DDIT'
+    END
 ORDER BY max_sal DESC;
 
 
