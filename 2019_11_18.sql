@@ -68,7 +68,7 @@ SELECT *
 FROM fastfood;
 
 
-SELECT a.sido, a.sigungu, a."¹ö+¸Æ+K", b."·Ô¸®", ROUND((a."¹ö+¸Æ+K"/b."·Ô¸®"),2)result
+SELECT a.sido, a.sigungu, a."¹ö+¸Æ+K", b."·Ô¸®", ROUND(a."¹ö+¸Æ+K"/b."·Ô¸®",2)result
 FROM
 (SELECT sido, sigungu, COUNT(*)"¹ö+¸Æ+K"
 FROM fastfood
@@ -82,8 +82,3 @@ WHERE a.sido = b.sido
 AND a.sigungu = b.sigungu
 GROUP BY a.sido, a.sigungu, a."¹ö+¸Æ+K", b."·Ô¸®"
 ORDER BY result DESC;
-
-SELECT sido, sigungu, COUNT(*)
-FROM fastfood
-WHERE gb IN ('¹ö°ÅÅ·','¸Æµµ³¯µå','KFC')
-GROUP BY sido, sigungu;
