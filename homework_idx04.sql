@@ -1,0 +1,47 @@
+CREATE INDEX idx_emp_06 ON emp (empno);
+CREATE INDEX idx_emp_07 ON emp (sal, deptno);
+CREATE INDEX idx_emp_08 ON emp (deptno);
+CREATE INDEX idx_dept_09 ON dept (loc, deptno);
+
+DROP INDEX idx_emp_05;
+
+EXPLAIN PLAN FOR
+SELECT *
+FROM emp
+WHERE empno = 7298;
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+EXPLAIN PLAN FOR
+SELECT *
+FROM emp
+WHERE ename = 'SCOTT';
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+EXPLAIN PLAN FOR
+SELECT *
+FROM emp
+WHERE sal BETWEEN 500 AND 7000
+AND deptno = 20;
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+
+EXPLAIN PLAN FOR
+SELECT *
+FROM emp, dept
+WHERE emp.deptno = dept.deptno
+AND emp.deptno = 10
+AND emp.empno LIKE '78%';
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
+
+
+EXPLAIN PLAN FOR
+SELECT b.*
+FROM emp a, emp b
+WHERE a.mgr = b.empno
+AND a.deptno = 30;
+
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY);
