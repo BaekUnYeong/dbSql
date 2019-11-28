@@ -21,7 +21,7 @@ FROM
     GROUP BY org_cd, parent_org_cd)
     START WITH parent_org_cd IS NULL
     CONNECT BY PRIOR org_cd = parent_org_cd;
-   
+
 -- PL/SQL
 -- 할당연산 :=
 -- System.out.println("") --> dbms_output.put_line("");
@@ -126,9 +126,6 @@ CREATE OR REPLACE PROCEDURE registdept_test (p_deptno IN dept.deptno%TYPE,
                                              p_dname IN dept.dname%TYPE,
                                              p_loc IN dept.loc%TYPE)
 IS
-    deptno dept.deptno%TYPE;
-    dname dept.dname%TYPE;
-    loc dept.loc%TYPE;
 BEGIN
     INSERT INTO dept_test (deptno, dname, loc) VALUES (p_deptno, p_dname, p_loc);
     COMMIT;
